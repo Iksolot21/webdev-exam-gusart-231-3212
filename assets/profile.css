@@ -1,0 +1,288 @@
+/* Общие настройки */
+* {
+    box-sizing: border-box;
+    padding: 0;
+  }
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  body {
+    min-height: 100vh;
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.6;
+      background-color: #f0f0f0;
+  }
+  
+  /* Основное содержимое страницы */
+  .content {
+    flex: 1;
+    /* Занимает всё доступное пространство */
+  }
+  
+  /* Футер */
+  footer {
+    bottom: 0;
+    left: 0;
+    background-color: black;
+    position: absolute;
+    width: 100%;
+    color: white;
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* Ссылки в футере */
+  footer a {
+    color: white;
+    text-decoration: none;
+  }
+  /* Стили для хедера */
+  .header {
+      background-color: #ffffff;
+      padding: 10px 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .header__container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+  }
+  
+  .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      text-decoration: none;
+  }
+  .nav {
+      display: flex;
+      gap: 20px;
+  }
+  
+  .nav__link {
+      color: #333;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+      transition: color 0.3s ease;
+  }
+  
+  .nav__link:hover {
+      color: tomato;
+  }
+  /* Заголовок */
+  .page-title {
+    font-weight: 700;
+    font-size: 32px;
+    margin-bottom: 10px;
+       text-align: center;
+  }
+  /* Стили для контента */
+  main {
+      padding: 20px 0;
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-bottom: 50px;
+  }
+  .container {
+    max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+  }
+  
+  /* Стили для форм профиля */
+  .profile {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-form {
+      display: flex;
+      flex-direction: column;
+      max-width: 600px;
+      margin: 0 auto;
+      margin-bottom: 20px;
+  }
+  
+  .profile-form .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 15px;
+  }
+  
+  .profile-form label {
+      margin-bottom: 5px;
+      font-weight: bold;
+  }
+  
+  .profile-form input[type="text"],
+  .profile-form input[type="email"],
+  .profile-form input[type="tel"] {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+  }
+  /* Стили для формы и кнопок в модальном окне */
+  
+  form {
+    margin-top: 20px;
+  }
+  .form-group {
+      margin-bottom: 15px;
+  }
+  
+  label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  textarea,
+  select {
+     width: calc(100% - 16px);
+    /* Учтем padding в ширине */
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 8px;
+      margin-top: 4px;
+      box-sizing: border-box;
+       font-size: 1rem;
+  }
+  .button {
+      cursor: pointer;
+    border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-size: 16px;
+     margin-top: 10px;
+    transition: background-color 0.3s ease;
+  }
+  .button--primary {
+      background-color: tomato;
+      color: white;
+  }
+  button:hover {
+      opacity: 0.8;
+  }
+  
+  /* Стили для таблицы */
+  .orders-table {
+      border-collapse: collapse;
+      width: 100%;
+      background-color: #fff;
+       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 20px;
+  }
+  
+  .orders-table th,
+  .orders-table td {
+      border: 1px solid #e2e8f0;
+      padding: 12px;
+      text-align: center;
+  }
+  
+  .orders-table th {
+      background-color: #edf2f7;
+       font-weight: bold;
+      text-align: center;
+  }
+  
+  .orders-table td {
+      text-align: center;
+  }
+  /* Стили для модальных окон */
+  
+  .modal {
+    display: none;
+    position: fixed;
+      top: 0;
+      left: 0;
+     width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      overflow: auto;
+  }
+  .modal-content {
+    position: relative;
+    background-color: #fff;
+      margin: 1% auto;
+    padding: 20px;
+      border-radius: 8px;
+    max-width: 80%;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal-content .close {
+       position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 24px;
+     font-weight: bold;
+    color: #e63946;
+     cursor: pointer;
+  }
+  
+  .modal-content .close:hover {
+      color: #d62828;
+  }
+  
+  .btn-container {
+    white-space: nowrap;
+    /* Запрещает перенос текста на новую строку */
+      text-align: center; /* Центрирование кнопок */
+  }
+  .btn-container button {
+    display: inline-block;
+      margin: 5px; /* Добавляет отступы между кнопками */
+  }
+  .btn {
+      padding: 10px;
+      background-color: #f0f0f0;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+  }
+  .btn:hover {
+      background-color: #e0e0e0;
+  }
+  /* Стили для уведомлений */
+  .notifications {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+     flex-direction: column;
+      align-items: flex-end;
+      z-index: 1001;
+  }
+  
+  .notification {
+       padding: 15px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+     color: white;
+  }
+  .notification--success {
+      background-color: #4caf50;
+  }
+  .notification--error {
+      background-color: #f44336;
+  }

@@ -3,13 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Корзина - E-Shop</title>
+    <title>E-Shop</title>
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
+    <!-- Шапка сайта -->
     <header class="header">
         <div class="container header__container">
             <a href="index.html" class="logo">E-Shop</a>
+            <div class="search">
+                <input type="text" class="search__input" placeholder="Поиск товаров...">
+                <button class="search__button">🔍</button>
+            </div>
             <nav class="nav">
                 <a href="index.html" class="nav__link">🏠 Главная</a>
                 <a href="profile.html" class="nav__link">👤 Профиль</a>
@@ -17,92 +22,86 @@
         </div>
     </header>
 
+    <!-- Область для уведомлений -->
     <div id="notifications" class="notifications"></div>
+  <main class="main">
+    <div class="container">
+    <h1 class="page-title">Оформление заказа</h1>
+    <section id="order">
+    <div class="order-section">
+        <div class="cards-line" id="cards-display">
+            <p> </p>
+            <p>Добавьте блюда, чтобы они появились здесь.</p>
+        </div>
+    </div>
 
-    <main class="main">
-        <div class="container">
-            <h1 class="page-title">Корзина</h1>
+    <div class="order-container">
+        <!-- Состав заказа -->
+        <div class="order-section">
+            <div id="order-summary" class="order-summary">
+                 <h2 class="order-summary__title">Состав заказа</h2>
+                <section id="orderSummary" class="order-summary__content"></section>
+            </div>
+            <textarea id="comment" class="order-comment" placeholder="Введите комментарий"></textarea>
+        </div>
+
+        <!-- Данные клиента -->
+         <div class="customer-details">
+          <h2>Ваши данные</h2>
+            <form id="orderForm" class="order-form">
+
+              <div class="form-group">
+                <label for="full_name">Имя</label>
+                <input type="text" id="full_name" name="full_name" required="">
+              </div>
             
-            <div class="cart">
-                <div id="cart-items" class="cart__items"></div>
-                
-                <div class="cart__summary">
-                    <div class="cart__total">
-                        <span>Итого:</span>
-                        <span id="cart-total">0 ₽</span>
-                    </div>
-                    
-                    <form id="order-form" class="order-form">
-                        <div class="form-group">
-                            <label for="fullName">ФИО</label>
-                            <input type="text" id="fullName" name="fullName" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="phone">Телефон</label>
-                            <input type="tel" id="phone" name="phone" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="address">Адрес доставки</label>
-                            <input type="text" id="address" name="address" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="deliveryDate">Дата доставки</label>
-                            <input type="date" id="deliveryDate" name="deliveryDate" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="deliveryTime">Время доставки</label>
-                            <select id="deliveryTime" name="deliveryTime" required>
-                                <option value="10:00-14:00">10:00-14:00</option>
-                                <option value="14:00-18:00">14:00-18:00</option>
-                                <option value="18:00-22:00">18:00-22:00</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="comment">Комментарий к заказу</label>
-                            <textarea id="comment" name="comment"></textarea>
-                        </div>
-                        
-                        <div class="form-group checkbox">
-                            <input type="checkbox" id="subscribe" name="subscribe">
-                            <label for="subscribe">Подписаться на рассылку</label>
-                        </div>
-                        
-                        <button type="submit" class="button button--primary">
-                            Оформить заказ
-                        </button>
-                    </form>
+              <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" required="">
+              </div>
+              <div class="form-group checkbox">
+                  <input type="checkbox" name="subscribe" id="subscribe" checked="">
+                  <label for="subscribe">Получать информацию о скидках и акциях</label>
                 </div>
-            </div>
-        </div>
-    </main>
+              <div class="form-group">
+                <label for="phone">Номер телефона</label>
+                 <input type="tel" id="phone" name="phone" required="">
+              </div>
+              <div class="form-group">
+                <label for="delivery_address">Адрес доставки</label>
+                  <input type="text" id="delivery_address" name="delivery_address" required="">
+                 <small><i>Доставка осуществляется только по Москве</i></small>
+               </div>
+             <div class="form-group">
+                <label>Время доставки</label>
+                 <div class="delivery-options">
+                   <label>
+                     <input type="radio" name="delivery_type" value="now" required=""> Как можно скорее
+                    </label>
+                    <label>
+                        <input type="radio" name="delivery_type" value="by_time" required=""> К указанному времени
+                    </label>
+                 </div>
+              </div>
 
-    <footer class="footer">
-        <div class="container footer__container">
-            <div class="footer__info">
-                <h2 class="footer__title">E-Shop</h2>
-                <p class="footer__text">Качественные товары с доставкой</p>
-            </div>
-            <div class="footer__contacts">
-                <h3 class="footer__subtitle">Контакты</h3>
-                <p>Email: support@eshop.ru</p>
-                <p>Телефон: 8 (800) 123-45-67</p>
-            </div>
-        </div>
-    </footer>
+                <div class="form-group">
+                 <label for="delivery_time">Укажите время доставки</label>
+                  <input type="time" id="delivery_time" name="delivery_time" min="07:00" max="23:00" step="300">
+                 <small><i>Доступное время доставки с 7:00 до 23:00</i></small>
+                </div>
 
-    <script src="assets/config.js"></script>
-    <script src="assets/utils.js"></script>
-    <script src="assets/api.js"></script>
-    <script src="assets/cart.js"></script>
+               <button type="submit" class="button button--primary">Подтвердить заказ</button>
+            </form>
+        </div>
+
+    </div>
+     <footer id="contacts">
+            <p>Позвонить нам <a href="tel:+70000000000">+7-000-000-00-00</a></p>
+        </footer>
+    <script type="module" src="assets/order.js"></script>
+</section>
+    </div>
+  </main>
 </body>
+
 </html>

@@ -5,70 +5,161 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Профиль - E-Shop</title>
     <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <header class="header">
-        <div class="container header__container">
-            <a href="index.html" class="logo">E-Shop</a>
-            <nav class="nav">
-                <a href="index.html" class="nav__link">🏠 Главная</a>
-                <a href="cart.html" class="nav__link">🛒 Корзина</a>
-            </nav>
-        </div>
-    </header>
+<header class="header">
+    <div class="container header__container">
+        <a href="index.html" class="logo">E-Shop</a>
+        <nav class="nav">
+            <a href="index.html" class="nav__link">🏠 Главная</a>
+            <a href="cart.html" class="nav__link">🛒 Корзина</a>
+        </nav>
+    </div>
+</header>
 
-    <div id="notifications" class="notifications"></div>
+<div id="notifications" class="notifications"></div>
 
-    <main class="main">
-        <div class="container">
-            <h1 class="page-title">Профиль</h1>
+<main class="main">
+    <div class="container">
+        <h1 class="page-title">Профиль</h1>
+
+        <div class="profile">
+            <form id="profile-form" class="profile-form">
+                <div class="form-group">
+                    <label for="profileName">Имя</label>
+                    <input type="text" id="profileName" name="profileName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="profileEmail">Email</label>
+                    <input type="email" id="profileEmail" name="profileEmail" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="profilePhone">Телефон</label>
+                    <input type="tel" id="profilePhone" name="profilePhone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="profileAddress">Адрес</label>
+                    <input type="text" id="profileAddress" name="profileAddress" required>
+                </div>
+
+                <button type="submit" class="button button--primary">
+                    Сохранить изменения
+                </button>
+            </form>
+             <h2>Ваши заказы</h2>
+            <table class="orders-table">
+               <thead>
+                    <tr>
+                        <th>ID заказа</th>
+                        <th>Дата создания</th>
+                         <th>Состав заказа</th>
+                        <th>Сумма заказа</th>
+                        <th>Время доставки</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersTableBody">
+                     <!-- Здесь будут отображаться заказы -->
+                </tbody>
+            </table>
+             
+            <div id="viewOrderModal" class="modal">
+                 <div class="modal-content">
+                     <span class="close" onclick="closeModal('viewOrderModal')">×</span>
+                    <h2>Просмотр заказа</h2>
+                    <p><span id="viewOrderDate"></span></p>
+                    <p><span id="viewOrderFullName"></span></p>
+                   <p><span id="viewOrderEmail"></span></p>
+                    <p><span id="viewOrderPhone"></span></p>
+                    <p><span id="viewOrderAddress"></span></p>
+                   <p><span id="viewOrderDeliveryTime"></span></p>
+                    <p><span id="viewOrderComment"></span></p>
+                    <ul id="orderItemsView"></ul>
+                    <p id="totalPriceView"></p>
+                </div>
+            </div>
             
-            <div class="profile">
-                <form id="profile-form" class="profile-form">
-                    <div class="form-group">
-                        <label for="profileName">Имя</label>
-                        <input type="text" id="profileName" name="profileName" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="profileEmail">Email</label>
-                        <input type="email" id="profileEmail" name="profileEmail" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="profilePhone">Телефон</label>
-                        <input type="tel" id="profilePhone" name="profilePhone" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="profileAddress">Адрес</label>
-                        <input type="text" id="profileAddress" name="profileAddress" required>
-                    </div>
-                    
-                    <button type="submit" class="button button--primary">
-                        Сохранить изменения
-                    </button>
-                </form>
+            <div id="orderEditModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeModal('orderEditModal')">×</span>
+                    <h2>Редактирование заказа</h2>
+                  <p><span id="editOrderDate"></span></p>
+                   <form id="editOrderForm">
+                       <div class="form-group">
+                           <label for="editFullName">Имя</label>
+                           <input type="text" id="editFullName" name="editFullName" required>
+                       </div>
+
+                        <div class="form-group">
+                            <label for="editEmail">Email</label>
+                           <input type="email" id="editEmail" name="editEmail" required>
+                       </div>
+
+                        <div class="form-group">
+                            <label for="editPhone">Телефон</label>
+                            <input type="tel" id="editPhone" name="editPhone" required>
+                       </div>
+
+                        <div class="form-group">
+                           <label for="editAddress">Адрес доставки</label>
+                            <input type="text" id="editAddress" name="editAddress" required>
+                       </div>
+                     <div class="form-group">
+                            <label for="delivery_time">Время доставки</label>
+                           <select id="delivery_time" name="delivery_time">
+                                <option value="10:00-14:00">10:00-14:00</option>
+                                <option value="14:00-18:00">14:00-18:00</option>
+                               <option value="18:00-22:00">18:00-22:00</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editComment">Комментарий к заказу</label>
+                            <textarea id="editComment" name="editComment"></textarea>
+                        </div>
+                      <ul id="orderItems2"></ul>
+                       <p id="totalPrice2"></p>
+                       <button type="submit" class="button button--primary">
+                            Сохранить изменения
+                        </button>
+                   </form>
+                </div>
+            </div>
+
+            <div id="deleteConfirmationModal" class="modal">
+                <div class="modal-content">
+                   <span class="close" onclick="closeModal('deleteConfirmationModal')">×</span>
+                    <h2>Подтверждение удаления</h2>
+                   <p>Вы уверены, что хотите удалить этот заказ?</p>
+                    <button onclick="deleteOrder()" class="button button--primary">Удалить</button>
+                   <button onclick="closeModal('deleteConfirmationModal')" class="button button--secondary">Отмена</button>
+                </div>
             </div>
         </div>
-    </main>
+    </div>
+</main>
 
-    <footer class="footer">
-        <div class="container footer__container">
-            <div class="footer__info">
-                <h2 class="footer__title">E-Shop</h2>
-                <p class="footer__text">Качественные товары с доставкой</p>
-            </div>
-            <div class="footer__contacts">
-                <h3 class="footer__subtitle">Контакты</h3>
-                <p>Email: support@eshop.ru</p>
-                <p>Телефон: 8 (800) 123-45-67</p>
-            </div>
+<footer class="footer">
+    <div class="container footer__container">
+        <div class="footer__info">
+            <h2 class="footer__title">E-Shop</h2>
+            <p class="footer__text">Качественные товары с доставкой</p>
         </div>
-    </footer>
+        <div class="footer__contacts">
+            <h3 class="footer__subtitle">Контакты</h3>
+            <p>Email: support@eshop.ru</p>
+            <p>Телефон: 8 (800) 123-45-67</p>
+        </div>
+    </div>
+</footer>
 
-    <script src="assets/config.js"></script>
-    <script src="assets/utils.js"></script>
-    <script src="assets/profile.js"></script>
+<script src="assets/config.js"></script>
+<script src="assets/utils.js"></script>
+<script src="assets/api.js"></script>
+<script src="assets/profile.js"></script>
 </body>
 </html>

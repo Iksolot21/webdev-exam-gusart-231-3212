@@ -15,15 +15,15 @@ const notifications = {
 
 // Утилиты для работы с корзиной
 const cart = {
-    add(productId) {
+    add(product) {
         const items = this.getItems();
-        items.push(productId);
+        items.push(product);
         localStorage.setItem('cart', JSON.stringify(items));
     },
 
     remove(productId) {
         const items = this.getItems();
-        const index = items.indexOf(productId);
+        const index = items.findIndex(item => item.id === productId);
         if (index > -1) {
             items.splice(index, 1);
             localStorage.setItem('cart', JSON.stringify(items));
