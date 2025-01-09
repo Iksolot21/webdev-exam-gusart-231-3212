@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Shop</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header class="header">
+        <div class="container header__container">
+            <a href="index.html" class="logo">E-Shop</a>
+            <div class="search">
+                <input type="text" class="search__input" placeholder="Поиск товаров...">
+                <button class="search__button">🔍</button>
+            </div>
+            <nav class="nav">
+                <a href="cart.html" class="nav__link">🛒 Корзина</a>
+                <a href="profile.html" class="nav__link">👤 Профиль</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Область для уведомлений -->
+    <div id="notifications" class="notifications"></div>
+
+    <!-- Основной контент -->
+    <main class="main">
+        <div class="container main__container">
+            <!-- Сайдбар с фильтрами -->
+            <aside class="sidebar">
+                <div class="filters">
+                    <h2 class="filters__title">Фильтры</h2>
+                    <form id="filters-form" class="filters__form">
+                        <div class="filters__group">
+                            <h3 class="filters__group-title">Категория</h3>
+                            <div class="checkbox">
+                                <input type="checkbox" id="category1" name="category" value="electronics">
+                                <label for="category1">Электроника</label>
+                            </div>
+                            <div class="checkbox">
+                                <input type="checkbox" id="category2" name="category" value="clothing">
+                                <label for="category2">Одежда</label>
+                            </div>
+                        </div>
+
+                        <div class="filters__group">
+                            <h3 class="filters__group-title">Цена</h3>
+                            <input type="number" class="filters__input" placeholder="От" name="price_min">
+                            <input type="number" class="filters__input" placeholder="До" name="price_max">
+                        </div>
+
+                        <div class="checkbox">
+                            <input type="checkbox" id="discount" name="discount">
+                            <label for="discount">Товары со скидкой</label>
+                        </div>
+
+                        <button type="submit" class="button button--primary">Применить</button>
+                    </form>
+                </div>
+            </aside>
+
+            <!-- Каталог товаров -->
+            <section class="catalog">
+                <div class="catalog__header">
+                    <h1 class="catalog__title">Каталог</h1>
+                    <select id="sort" class="catalog__sort">
+                        <option value="rating_desc">По рейтингу (высокий)</option>
+                        <option value="rating_asc">По рейтингу (низкий)</option>
+                        <option value="price_desc">По цене (дорогие)</option>
+                        <option value="price_asc">По цене (дешевые)</option>
+                    </select>
+                </div>
+                
+                <div id="products" class="products"></div>
+                
+                <button id="load-more" class="button button--secondary load-more">
+                    Загрузить ещё
+                </button>
+            </section>
+        </div>
+    </main>
+
+    <!-- Подвал -->
+    <footer class="footer">
+        <div class="container footer__container">
+            <div class="footer__info">
+                <h2 class="footer__title">E-Shop</h2>
+                <p class="footer__text">Качественные товары с доставкой</p>
+            </div>
+            <div class="footer__contacts">
+                <h3 class="footer__subtitle">Контакты</h3>
+                <p>Email: support@eshop.ru</p>
+                <p>Телефон: 8 (800) 123-45-67</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/config.js"></script>
+    <script src="assets/utils.js"></script>
+    <script src="assets/api.js"></script>
+    <script src="assets/main.js"></script>
+</body>
+</html>
