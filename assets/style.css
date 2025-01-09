@@ -226,7 +226,11 @@ body {
 .product-card__price {
     margin-bottom: 15px;
 }
-
+.delivery-price {
+    color: #777; /* Серый цвет */
+    font-size: 0.8em; /* Меньший размер шрифта */
+    margin-top: 5px;
+}
 .product-card__price--old {
     text-decoration: line-through;
     color: #999;
@@ -243,6 +247,43 @@ body {
     margin: 0 auto;
 }
 
+/* assets/style.css */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Две колонки */
+    gap: 20px; /* Отступ между колонками */
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+.form-grid .delivery-info .form-group,
+.form-grid .customer-info .form-group {
+    width: 100%;
+}
+
+.order-form .form-group {
+    width: 100%;
+}
+
+
+.delivery-info {
+    width: 100%;
+}
+
+.customer-info {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr; /* Одна колонка для мобильных */
+    }
+}
 /* Подвал */
 .footer {
     background-color: white;
