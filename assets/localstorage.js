@@ -2,10 +2,15 @@ const LocalStorageService = {
     getFullOrder() {
         return JSON.parse(localStorage.getItem('cart') || '[]');
     },
-    saveFullOrder(order) {
+    addItem(item) {
+        const cart = this.getFullOrder();
+        cart.push(item); // Добавляем новый товар
+        localStorage.setItem('cart', JSON.stringify(cart));
+    },
+  saveFullOrder(order) {
        localStorage.setItem('cart', JSON.stringify(order));
     },
-   clearFullOrder() {
+  clearFullOrder() {
         localStorage.removeItem('cart');
     }
 };

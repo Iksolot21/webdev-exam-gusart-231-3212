@@ -16,14 +16,15 @@
                 <button class="search__button">🔍</button>
             </div>
             <nav class="nav">
+                <a href="index.html" class="nav__link">🏠 Главная</a>
                 <a href="cart.html" class="nav__link">🛒 Корзина</a>
                 <a href="profile.html" class="nav__link">👤 Профиль</a>
             </nav>
+           <!-- Область для уведомлений -->
+           <div id="notifications" class="notifications"></div>
         </div>
     </header>
 
-    <!-- Область для уведомлений -->
-    <div id="notifications" class="notifications"></div>
 
     <!-- Основной контент -->
     <main class="main">
@@ -35,14 +36,8 @@
                     <form id="filters-form" class="filters__form">
                         <div class="filters__group">
                             <h3 class="filters__group-title">Категория</h3>
-                            <div class="checkbox">
-                                <input type="checkbox" id="category1" name="category" value="electronics">
-                                <label for="category1">Электроника</label>
-                            </div>
-                            <div class="checkbox">
-                                <input type="checkbox" id="category2" name="category" value="clothing">
-                                <label for="category2">Одежда</label>
-                            </div>
+                           <div id="categories-container">
+                           </div>
                         </div>
 
                         <div class="filters__group">
@@ -56,8 +51,11 @@
                             <label for="discount">Товары со скидкой</label>
                         </div>
 
-                        <button type="submit" class="button button--primary">Применить</button>
-                    </form>
+                        <div class="filters__buttons">
+                           <button type="submit" class="button button--primary">Применить</button>
+                           <button type="button" id="reset-filters" class="button button--secondary">Сбросить</button>
+                       </div>
+                   </form>
                 </div>
             </aside>
 
@@ -72,7 +70,7 @@
                         <option value="price_asc">По цене (дешевые)</option>
                     </select>
                 </div>
-                
+
                 <div id="products" class="products"></div>
                  <button id="load-more" class="button button--secondary load-more">
                     Загрузить ещё
@@ -99,6 +97,6 @@
     <script src="assets/config.js"></script>
     <script src="assets/utils.js"></script>
     <script src="assets/api.js"></script>
-    <script src="assets/main.js"></script>
+    <script type="module" src="assets/main.js"></script>
 </body>
 </html>
