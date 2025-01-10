@@ -171,23 +171,10 @@ function initializeEventListeners() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    const tableContainer = document.querySelector('.table-container');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-  
-    if(!tableContainer) return;
-  
-    const scrollAmount = tableContainer.offsetWidth;
-  
-    prevBtn.addEventListener('click', () => {
-      tableContainer.scrollLeft -= scrollAmount;
-    });
-  
-    nextBtn.addEventListener('click', () => {
-      tableContainer.scrollLeft += scrollAmount;
-    });
-  });
-  
+    init();
+    initializeEventListeners();
+    
+});
 function getGood(goodId) {
     if (!goods || !Array.isArray(goods)) {
         console.error('Массив товаров не инициализирован или имеет неверный формат');
