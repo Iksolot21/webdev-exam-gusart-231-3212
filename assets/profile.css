@@ -1,11 +1,3 @@
-.orders-table {
-  border-collapse: collapse;
-  width: 100%;
-  background-color: #ffffff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  overflow: hidden;
-}
 
 html,
 body {
@@ -21,6 +13,18 @@ body {
 }
 
 
+.orders-table-container {
+  overflow-x: auto; /* Добавляем горизонтальную прокрутку, если таблица не помещается */
+}
+.orders-table {
+  border-collapse: collapse;
+  width: 100%; /* Таблица занимает 100% ширины контейнера */
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+   margin-top: 20px;
+}
 footer {
   background-color: white;
     padding: 40px 0;
