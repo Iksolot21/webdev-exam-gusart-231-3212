@@ -41,11 +41,9 @@ function displayOrderSummary(fullOrder) {
     const cardsDisplay = document.getElementById('cards-display');
     const totalPriceDisplay = document.getElementById('totalPriceDisplay');
 
-    // Очищаем содержимое перед обновлением
     cardsDisplay.innerHTML = '';
     let totalPrice = 0;
     if (isEmptyOrder(fullOrder)) {
-        // Если заказ пустой, отображаем сообщение
        cardsDisplay.innerHTML = '<p> </p><p>Добавьте товары, чтобы они появились здесь.</p>';
         totalPriceDisplay.textContent = '0';
         return;
@@ -53,7 +51,6 @@ function displayOrderSummary(fullOrder) {
    
 
     fullOrder.forEach(item => {
-        // Создаём карточку и добавляем её в верхний контейнер
         const cardForDisplay = createProductCard(item);
         cardsDisplay.appendChild(cardForDisplay);
         totalPrice += (item.discount_price || item.actual_price);
@@ -63,7 +60,6 @@ function displayOrderSummary(fullOrder) {
     
 }
 
-// Функция создания карточки товара (используется и в main.js)
 function createProductCard(product) {
     const card = document.createElement('div');
     card.className = `product-card product-card-${product.id}`;
@@ -108,23 +104,14 @@ function removeDish(dishId, card) {
    if (indexToRemove !== -1) {
     fullOrder.splice(indexToRemove, 1);
   }
-
-
-    // Пересчитываем общую стоимость
     const totalPrice = calculateTotalPrice(fullOrder);
 
-    // Сохраняем обновленный заказ
     LocalStorageService.saveFullOrder(fullOrder);
 
-    // Обновляем отображение только текущей карточки
     if (card) {
-        card.remove(); // Удаляем карточку из DOM
+        card.remove(); 
     }
-
-    // Обновляем состав заказа
     displayOrderSummary(fullOrder);
-
-    // Проверяем, если все карточки удалены, отображаем сообщение
     if (isEmptyOrder(fullOrder)) {
         const cardsDisplay = document.getElementById('cards-display');
         cardsDisplay.innerHTML = '<p> </p><p>Добавьте товары, чтобы они появились здесь.</p>';
@@ -166,7 +153,6 @@ function handleOrderSubmit(event) {
     const formattedDeliveryDate = `${day}.${month}.${year}`;
 
 
-    // Создаем объект с данными заказа
     const orderData = {
         full_name: form.querySelector('#full_name').value.trim(),
         email: form.querySelector('#email').value.trim(),
@@ -175,7 +161,6 @@ function handleOrderSubmit(event) {
         delivery_address: form.querySelector('#delivery_address').value.trim(),
         delivery_date: formattedDeliveryDate,
         delivery_interval: deliveryTime,
-       // comment: commentValue,  // remove from here
     };
 
     console.log('JSON данных заказа:', JSON.stringify(orderData, null, 2));
@@ -209,12 +194,9 @@ function handleOrderSubmit(event) {
         .then(data => {
             alert('Ваш заказ успешно оформлен! Спасибо!');
             console.log('Комментарий:', commentValue);
-            // Получаем текущие товары в корзине
              window.location.reload();
             const currentOrder = LocalStorageService.getFullOrder() || [];
-            // Удаляем только заказанные товары
             const remainingItems = currentOrder.filter(item => !goodIds.includes(item.id));
-            // Сохраняем оставшиеся товары
             LocalStorageService.saveFullOrder(remainingItems);
 
          })

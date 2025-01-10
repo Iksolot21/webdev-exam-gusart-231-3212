@@ -1,9 +1,4 @@
 /* Общие стили */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
 body {
     font-family: Arial, sans-serif;
@@ -58,19 +53,32 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 15px;
+    position: relative; 
 }
 
 .logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    text-decoration: none;
+  position: absolute;
+  top: 50%; 
+  left: 15px; 
+  transform: translateY(-50%); 
+    z-index: 10;
 }
+
+.logo__img {
+    max-height: 80px; 
+    display: block;
+    margin-bottom: 19px;
+}
+
 
 .search {
     flex: 0 1 400px;
     display: flex;
-      position: relative; /* Add this line */
+    position: relative;
+    margin-left: auto;
+}
+.nav {
+    margin-left: auto;
 }
 
 .search__input {
@@ -95,13 +103,13 @@ body {
     text-decoration: none;
     color: #333;
     position: relative;
-    white-space: nowrap; /* Запрещает перенос текста внутри ссылки */
-    display: inline-flex; /* Делает ссылку flex-контейнером */
-    align-items: center; /* Выравнивание по центру по вертикали */
+    white-space: nowrap; 
+    display: inline-flex; 
+    align-items: center; 
 }
 
 .nav__link span {
-  display: inline-block; /* чтобы иконка не занимала всю ширину */
+  display: inline-block; 
   margin-right: 5px;
 }
 
@@ -235,10 +243,10 @@ body {
 .product-card__title {
     font-size: 16px;
     margin-bottom: 10px;
-    max-height: 60px; /* Увеличиваем максимальную высоту, при необходимости можно корректировать */
+    max-height: 60px; 
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* Количество строк, которые мы хотим показывать (можно менять) */
+    -webkit-line-clamp: 2; 
     -webkit-box-orient: vertical;
     flex: 1 0 auto;
     line-height: 1.2;
@@ -255,8 +263,8 @@ body {
      flex: 0 0 auto;
 }
 .delivery-price {
-    color: #777; /* Серый цвет */
-    font-size: 0.8em; /* Меньший размер шрифта */
+    color: #777; 
+    font-size: 0.8em; 
     margin-top: 5px;
 }
 .product-card__price--old {
@@ -275,11 +283,10 @@ body {
     margin: 0 auto;
 }
 
-/* assets/style.css */
 .form-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Две колонки */
-    gap: 20px; /* Отступ между колонками */
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px; 
 }
 
 .form-group {
@@ -309,10 +316,9 @@ body {
 
 @media (max-width: 768px) {
     .form-grid {
-        grid-template-columns: 1fr; /* Одна колонка для мобильных */
+        grid-template-columns: 1fr; 
     }
 }
-/* Подвал */
 .footer {
     background-color: white;
     padding: 40px 0;
@@ -323,7 +329,6 @@ body {
     display: flex;
     justify-content: space-between;
 }
-/* Autocomplete styles */
 .autocomplete-list {
     position: absolute;
     top: 100%;
@@ -353,35 +358,60 @@ body {
 }
 
 /* Адаптивность */
+
 @media (max-width: 768px) {
-    .main__container {
-        flex-direction: column;
+    .modal-content {
+      width: 95%;
+      padding: 20px;
+      margin: 10px;
     }
-
-    .sidebar {
-        flex: none;
-        width: 100%;
-    }
-
+  }
+  @media (max-width: 768px) {
     .header__container {
         flex-wrap: wrap;
+        justify-content: center; 
+        padding: 10px;
     }
 
-    .search {
-        order: 3;
-        flex: 0 0 100%;
-        margin-top: 15px;
+    .logo {
+        position: static; 
+        transform: none; 
+        margin-bottom: 10px;
+          left: auto; 
+      display: flex; 
+      justify-content: center; 
     }
-  .nav__link {
-    white-space: normal; /* Разрешаем перенос текста когда нехватает места */
+    .logo__img {
+       max-height: 60px;
+    }
+
+      .main__container {
+          flex-direction: column;
+      }
+  
+      .sidebar {
+          flex: none;
+          width: 100%;
+      }
+  
+      .header__container {
+          flex-wrap: wrap;
+      }
+  
+      .search {
+          order: 3;
+          flex: 0 0 100%;
+          margin-top: 15px;
+      }
+    .nav__link {
+      white-space: normal; 
+    }
   }
-}
-
 
 .cart-count {
     position: absolute;
-    top: -10px; /* Смещаем немного вверх */
-    right: -15px; /* Смещаем вправо */
+    top: -10px; 
+    right: -15px; 
     background-color: #28a745;
     color: white;
     border-radius: 50%;

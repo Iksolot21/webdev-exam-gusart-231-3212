@@ -1,13 +1,9 @@
 import { CONFIG } from './config.js';
-import api from './api.js';
 
-// Глобальные переменные для хранения данных
 let goods = [];
 let orders = [];
 
-// Инициализация приложения
 function init() {
-    // Загружаем данные о товарах
     fetch(`${CONFIG.API_URL}/goods?api_key=${CONFIG.API_KEY}`)
         .then(response => {
             if (!response.ok) {
@@ -16,14 +12,12 @@ function init() {
             return response.json();
         })
         .then(data => {
-            // Проверяем структуру данных
             if (!data || !Array.isArray(data)) {
                 throw new Error('Неверный формат данных товаров');
             }
-            goods = data; // Сохраняем данные о товарах
+            goods = data; 
             console.log("Товары загружены:", goods);
 
-            // После успешной загрузки товаров загружаем заказы
             return loadOrders();
         })
         .catch(error => {
@@ -32,7 +26,6 @@ function init() {
         });
 }
 
-// Функция загрузки заказов
 function loadOrders() {
     return fetch(`${CONFIG.API_URL}/orders?api_key=${CONFIG.API_KEY}`)
         .then(response => {
@@ -45,17 +38,15 @@ function loadOrders() {
             if (!data) {
                 throw new Error('Неверный формат данных заказов');
             }
-            // Преобразуем delivery_interval в delivery_time
             orders = data.map(order => {
                 if (order.delivery_interval) {
                     order.delivery_time = order.delivery_interval;
-                    delete order.delivery_interval; // удаляем старое поле
+                    delete order.delivery_interval;
                 }
                 return order;
             });
             console.log("Заказы загружены:", orders);
 
-            // После загрузки всех данных обновляем таблицу
             updateOrdersTable();
         })
         .catch(error => {
@@ -64,7 +55,6 @@ function loadOrders() {
         });
 }
 
-// Функция обновления таблицы заказов
 function updateOrdersTable() {
     const ordersTableBody = document.getElementById('ordersTableBody');
 
@@ -73,13 +63,10 @@ function updateOrdersTable() {
         return;
     }
 
-    // Сортируем заказы по дате (новые сверху)
     orders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
 
-    // Очищаем существующую таблицу
     ordersTableBody.innerHTML = '';
 
-    // Добавляем каждый заказ в таблицу
     orders.forEach(order => {
         if (!order || !order.good_ids) {
             console.error('Некорректные данные заказа:', order);
@@ -96,7 +83,6 @@ function updateOrdersTable() {
             .filter(Boolean));
         const orderDate = new Date(order.created_at).toLocaleString();
 
-        // Создаем кнопки программно
         const viewButton = document.createElement('button');
         viewButton.innerHTML = '👁️';
         viewButton.addEventListener('click', () => viewOrderDetails(order.id));
@@ -131,8 +117,6 @@ function updateOrdersTable() {
         <td class="text-center">${deliveryDateTime}</td>
         <td class="btn-container"></td>
     `;
-
-        // Добавляем кнопки в последнюю ячейку
         const buttonContainer = row.querySelector('.btn-container');
         buttonContainer.appendChild(viewButton);
         buttonContainer.appendChild(editButton);
@@ -142,22 +126,17 @@ function updateOrdersTable() {
     });
 }
 
-// Делаем функции доступными глобально
 window.viewOrderDetails = viewOrderDetails;
 window.editOrder = editOrder;
 window.confirmDeleteOrder = confirmDeleteOrder;
 window.deleteOrder = deleteOrder;
 
-// Инициализация всех обработчиков событий
-// Инициализация всех обработчиков событий
 function initializeEventListeners() {
-    // Обработчик формы редактирования
     const editForm = document.getElementById('editOrderForm');
     if (editForm) {
         editForm.addEventListener('submit', saveEditedOrder);
     }
 
-    // Обработчики закрытия модальных окон
     document.querySelectorAll('.modal .close-modal-btn').forEach(button => {
         button.addEventListener('click', () => {
             const modal = button.closest('.modal');
@@ -167,7 +146,6 @@ function initializeEventListeners() {
         });
     });
 
-    // Обработчики закрытия модальных окон
     document.querySelectorAll('.modal .cancel-modal-btn').forEach(button => {
         button.addEventListener('click', () => {
             const modal = button.closest('.modal');
@@ -177,15 +155,12 @@ function initializeEventListeners() {
         });
     });
 
-
-    // Обработчик кнопки удаления в модальном окне подтверждения
     const deleteConfirmButton = document.querySelector('#deleteConfirmationModal .confirm-delete');
     if (deleteConfirmButton) {
         deleteConfirmButton.addEventListener('click', deleteOrder);
     }
 
 
-    // Обработчик кнопки отмены в модальном окне удаления
     const deleteCancelButton = document.querySelector('#deleteConfirmationModal .cancel-delete');
     if (deleteCancelButton) {
         deleteCancelButton.addEventListener('click', function (event) {
@@ -195,12 +170,24 @@ function initializeEventListeners() {
     }
 }
 
-// Обновляем инициализацию приложения
 document.addEventListener('DOMContentLoaded', () => {
-    init();
-    initializeEventListeners();
-});
-// Функция получения товара по ID
+    const tableContainer = document.querySelector('.table-container');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+  
+    if(!tableContainer) return;
+  
+    const scrollAmount = tableContainer.offsetWidth;
+  
+    prevBtn.addEventListener('click', () => {
+      tableContainer.scrollLeft -= scrollAmount;
+    });
+  
+    nextBtn.addEventListener('click', () => {
+      tableContainer.scrollLeft += scrollAmount;
+    });
+  });
+  
 function getGood(goodId) {
     if (!goods || !Array.isArray(goods)) {
         console.error('Массив товаров не инициализирован или имеет неверный формат');
@@ -209,7 +196,6 @@ function getGood(goodId) {
     return goods.find(good => good && good.id === goodId) || null;
 }
 
-// Функция получения заказа по ID
 function getOrder(orderId) {
     if (!orders || !Array.isArray(orders)) {
         console.error('Массив заказов не инициализирован или имеет неверный формат');
@@ -218,7 +204,6 @@ function getOrder(orderId) {
     return orders.find(order => order && order.id === orderId) || null;
 }
 
-// Функция расчета общей стоимости
 function calculateOrderPrice(orderGoods) {
     if (!Array.isArray(orderGoods)) {
         console.error('Неверный формат данных товаров для расчета стоимости');
@@ -232,7 +217,6 @@ function calculateOrderPrice(orderGoods) {
     }, 0);
 }
 
-// Функция отображения деталей заказа
 function viewOrderDetails(orderId) {
     console.log("Вызвана функция viewOrderDetails с orderId:", orderId);
 
@@ -277,7 +261,6 @@ function viewOrderDetails(orderId) {
         container.appendChild(p);
     }
 
-    // Обновляем список товаров
     const orderItemsList = document.getElementById('orderItemsView');
     orderItemsList.innerHTML = '';
 
@@ -290,7 +273,6 @@ function viewOrderDetails(orderId) {
     document.getElementById('totalPriceView').textContent = `${totalPrice}₽`;
     openModal('viewOrderModal');
 }
-// Функция редактирования заказа
 function editOrder(orderId) {
     const order = getOrder(orderId);
     if (!order) {
@@ -371,7 +353,6 @@ function editOrder(orderId) {
     window.editOrderId = orderId;
 
 
-    // Обновляем список товаров
     const orderItemsList = document.getElementById('orderItems2');
     orderItemsList.innerHTML = '';
 
@@ -384,7 +365,6 @@ function editOrder(orderId) {
     openModal('orderEditModal');
 }
 
-// Функция сохранения отредактированного заказа
 function saveEditedOrder(event) {
     event.preventDefault();
 
@@ -425,13 +405,11 @@ function saveEditedOrder(event) {
         });
 }
 
-// Функция подтверждения удаления заказа
 function confirmDeleteOrder(orderId) {
     window.deleteOrderId = orderId;
     openModal('deleteConfirmationModal');
 }
 
-// Функция удаления заказа
 function deleteOrder() {
     fetch(`${CONFIG.API_URL}/orders/${window.deleteOrderId}?api_key=${CONFIG.API_KEY}`, {
         method: 'DELETE'
@@ -455,7 +433,6 @@ function deleteOrder() {
         });
 }
 
-// Вспомогательные функции для работы с модальными окнами
 function openModal(modalId) {
     const modal = document.getElementById(modalId);
     if (modal) {
@@ -470,7 +447,6 @@ function closeModal(modalId) {
     }
 }
 
-// Функция отображения ошибок
 function showError(message) {
     const ordersTableBody = document.getElementById('ordersTableBody');
     if (ordersTableBody) {
@@ -485,11 +461,9 @@ function showError(message) {
     notifications.show(message, 'error');
 }
 
-// Добавляем обработчики событий
 document.addEventListener('DOMContentLoaded', init);
 document.getElementById('editOrderForm').addEventListener('submit', saveEditedOrder);
 
-// Добавляем обработчики для закрытия модальных окон
 document.querySelectorAll('.modal .close').forEach(button => {
     button.addEventListener('click', () => {
         const modal = button.closest('.modal');

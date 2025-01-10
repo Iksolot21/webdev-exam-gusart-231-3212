@@ -12,7 +12,9 @@
 <body>
     <header class="header">
         <div class="container header__container">
-            <a href="index.html" class="logo">E-Shop</a>
+          <a href="index.html" class="logo">
+            <img src="assets/logo.png" alt="Логотип E-Shop" class="logo__img">
+        </a>
             <div class="search">
                 <input type="text" class="search__input" placeholder="Поиск товаров...">
                 <button class="search__button">🔍</button>
@@ -27,23 +29,28 @@
 
     <main class="container">
         <h1 class="main-title">История заказов</h1>
-        <div class="table-container">
-        <table class="orders-table">
-          <thead>
-            <tr>
-              <th>№</th>
-              <th>Дата оформления</th>
-              <th>Состав заказа</th>
-              <th>Стоимость</th>
-              <th>Доставка</th>
-              <th>Действия</th>
-            </tr>
-          </thead>
-          <tbody id="ordersTableBody">
-            <!-- Данные о заказах будут добавляться сюда с помощью JavaScript -->
-          </tbody>
-        </table>
-      </div>
+        <div class="table-slider-container">
+          <div class="slider-controls">
+              <button id="prevBtn" class="slider-btn slider-btn--prev">←</button>
+              <button id="nextBtn" class="slider-btn slider-btn--next">→</button>
+          </div>
+              <div class="table-container">
+                  <table class="orders-table">
+                    <thead>
+                      <tr>
+                        <th>№</th>
+                        <th>Дата оформления</th>
+                        <th>Состав заказа</th>
+                        <th>Стоимость</th>
+                        <th>Доставка</th>
+                        <th>Действия</th>
+                      </tr>
+                    </thead>
+                    <tbody id="ordersTableBody">
+                    </tbody>
+                  </table>
+              </div>
+          </div>
     </main>
 
 
@@ -61,7 +68,6 @@
     </div>
   </div>
 
-  <!-- Модальное окно для редактирования заказа -->
   <div id="orderEditModal" class="modal">
     <div class="modal-content">
       <button class="close-modal-btn">×</button>
@@ -86,19 +92,18 @@
       <button class="cancel-delete">Нет</button>
     </div>
   </div>
- <!-- Подвал -->
 <script src="assets/utils.js"></script>
 <script type="module" src="assets/profile.js"></script>
 <footer class="footer">
     <div class="container footer__container">
         <div class="footer__info">
-            <h2 class="footer__title">E-Shop</h2>
-            <p class="footer__text">Качественные товары с доставкой</p>
+            <h2 class="footer__title">Online-Shop</h2>
+            <p class="footer__text">Комфорт покупок, скорость доставки.</p>
         </div>
         <div class="footer__contacts">
             <h3 class="footer__subtitle">Контакты</h3>
-            <p>Email: support@eshop.ru</p>
-            <p>Телефон: 8 (800) 123-45-67</p>
+            <p>Email: support@Online-Shop.ru</p>
+            <p>Телефон: 8 (540) 543-21-10</p>
         </div>
     </div>
 </footer>

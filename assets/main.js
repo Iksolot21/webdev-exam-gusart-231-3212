@@ -64,11 +64,9 @@ async function loadProducts() {
 
 
        allProducts.push(...data.goods);
-        // Добавляем товары на страницу
         data.goods.forEach(product => {
            productsContainer.appendChild(createProductCard(product));
            categories.add(product.main_category);
-            // Определяем min/max цены
             const price = product.discount_price || product.actual_price;
                 if (price < minPrice) {
                 minPrice = price;
@@ -77,7 +75,6 @@ async function loadProducts() {
                     maxPrice = price;
                 }
         });
-        // Проверяем, есть ли еще товары
         hasMore = currentPage * CONFIG.ITEMS_PER_PAGE < data._pagination.total_count;
         loadMoreButton.style.display = hasMore ? 'block' : 'none';
 
@@ -273,7 +270,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('input[name="discount"]').checked = true;
     }
     currentFilters = savedFilters;
-     // Добавляем обработчик для кнопки поиска
     const searchButton = document.querySelector('.search__button');
     searchButton.addEventListener('click', function() {
         const query = document.querySelector('.search__input').value;

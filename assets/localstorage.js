@@ -4,7 +4,7 @@ const LocalStorageService = {
     },
     addItem(item) {
         const cart = this.getFullOrder();
-        cart.push(item); // Добавляем новый товар
+        cart.push(item); 
         localStorage.setItem('cart', JSON.stringify(cart));
     },
   saveFullOrder(order) {

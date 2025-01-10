@@ -7,8 +7,8 @@
              page: page,
              per_page: CONFIG.ITEMS_PER_PAGE,
              api_key: CONFIG.API_KEY,
-             sort_order: sort, // Используем sort для sort_order
-             ...filters // Добавляем остальные фильтры
+             sort_order: sort, 
+             ...filters 
          });
  
  
