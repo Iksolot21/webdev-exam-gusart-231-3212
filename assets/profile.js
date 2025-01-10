@@ -1,3 +1,6 @@
+import { CONFIG } from './config.js';
+import api from './api.js';
+
 // Глобальные переменные для хранения данных
 let goods = [];
 let orders = [];

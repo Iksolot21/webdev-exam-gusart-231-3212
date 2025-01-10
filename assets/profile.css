@@ -133,45 +133,123 @@ body {
 
 /* Стили для модальных окон */
 
+/* Base modal styles */
 .modal {
   display: none;
   position: fixed;
-  top: 0;
+  z-index: 1000;
   left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-  /* Затемнение фона */
-  z-index: 1000;
-  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Flexbox centering */
+  display: none;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  padding: 20px;
 }
 
 .modal-content {
-  position: relative;
   background-color: #fff;
-  margin: 1% auto;
-  /* Центрирование модального окна по вертикали и горизонтали */
-  padding: 20px;
+  padding: 25px;
   border-radius: 8px;
-  max-width: 80%;
-  /* Максимальная ширина контента модального окна */
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  margin: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.modal-content .close {
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    padding: 20px;
+    margin: 10px;
+  }
+}
+/* Адаптивность */
+@media (max-width: 768px) {
+    .main__container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        flex: none;
+        width: 100%;
+    }
+
+    .header__container {
+        flex-wrap: wrap;
+    }
+
+    .search {
+        order: 3;
+        flex: 0 0 100%;
+        margin-top: 15px;
+    }
+  .nav__link {
+    white-space: normal; /* Разрешаем перенос текста когда нехватает места */
+  }
+}
+
+/* Close button positioning */
+.close-modal-btn {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  right: 15px;
+  top: 15px;
+  background: none;
+  border: none;
   font-size: 24px;
-  font-weight: bold;
-  color: #e63946;
-  /* Цвет крестика */
+  cursor: pointer;
+  padding: 5px;
+  line-height: 1;
+  color: #666;
+  transition: color 0.2s ease;
+}
+
+.close-modal-btn:hover {
+  color: #000;
+}
+
+/* Form elements spacing */
+.modal-content form {
+  margin-top: 20px;
+}
+
+.modal-content label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.modal-content input,
+.modal-content textarea,
+.modal-content select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Action buttons styling */
+.modal-content button {
+  margin-top: 20px;
+  margin-right: 10px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
   cursor: pointer;
 }
 
-.modal-content .close:hover {
-  color: #d62828;
-  /* Изменение цвета крестика при наведении */
+/* Ensure modal is visible when displayed */
+.modal[style*="display: block"] {
+  display: flex !important;
 }
 
 /* Стили для формы и кнопок в модальном окне */
@@ -195,7 +273,7 @@ textarea {
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 8px;
-  margin-top: 4px;
+  margin-top: 10px;
   box-sizing: border-box;
 }
 
@@ -250,19 +328,3 @@ tbody tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-button.close-modal-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  font-size: 16px;
-  margin-top: 10px;
-  transition: background-color 0.3s ease;
-}
-
-button.close-modal-btn:hover {
-  background-color: #ddd;
-}

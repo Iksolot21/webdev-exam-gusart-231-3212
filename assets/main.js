@@ -1,13 +1,17 @@
-let currentPage = 1;
-let hasMore = true;
-let currentFilters = {}; // Объект для хранения текущих фильтров
-let allProducts = []; // Массив для хранения всех товаров
-let categories = new Set(); // Множество для хранения всех категорий
-let minPrice = Infinity;
-let maxPrice = -Infinity;
+import api from './api.js';
+import { CONFIG } from './config.js';
 import LocalStorageService from './localStorage.js';
 
-// Создание карточки товара
+let currentPage = 1;
+let hasMore = true;
+let currentFilters = {};
+let allProducts = [];
+let categories = new Set();
+let minPrice = Infinity;
+let maxPrice = -Infinity;
+
+
+
 function createProductCard(product) {
     const card = document.createElement('div');
     card.className = 'product-card';
@@ -29,7 +33,6 @@ function createProductCard(product) {
         </button>
     `;
 
-    // Add event listener directly instead of using onclick attribute
     const addToCartButton = card.querySelector('.button--primary');
     addToCartButton.addEventListener('click', () => {
         handleAddToCart(product);
@@ -38,13 +41,13 @@ function createProductCard(product) {
     return card;
 }
 
-// Simplified handleAddToCart function
 function handleAddToCart(product) {
     LocalStorageService.addItem(product);
     notifications.show('Товар добавлен в корзину', 'success');
+        updateCartCount();
 }
 
-// Загрузка товаров
+
 async function loadProducts() {
     try {
         const sortSelect = document.getElementById('sort');
@@ -84,7 +87,7 @@ async function loadProducts() {
 }
 
 
-// Обработчик кнопки "Загрузить еще"
+
 function handleLoadMore() {
     if (hasMore) {
         currentPage++;
@@ -92,22 +95,19 @@ function handleLoadMore() {
     }
 }
 
-// Обработчик изменения сортировки
+
 function handleSortChange() {
     const productsContainer = document.getElementById('products');
-    productsContainer.innerHTML = ''; // Очищаем контейнер
+    productsContainer.innerHTML = '';
     allProducts = [];
     currentPage = 1;
     loadProducts();
 }
 
-// Обработчик отправки формы фильтров
 function handleFilterSubmit(event) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
-
-    // Собираем выбранные категории в строку, разделенную запятыми
      const categories = formData.getAll('category').join(',');
 
     const filters = {
@@ -117,23 +117,17 @@ function handleFilterSubmit(event) {
         discount: formData.get('discount') === 'on'
     };
 
-    // Сохраняем фильтры в localStorage
     localStorage.setItem('filters', JSON.stringify(filters));
-
-    // Обновляем текущие фильтры
     currentFilters = filters;
-
-    // Применяем фильтры
     applyFilters();
 }
 
-// Функция применения фильтров
+
 async function applyFilters() {
     const productsContainer = document.getElementById('products');
     productsContainer.innerHTML = '';
     currentPage = 1;
 
-    // Устанавливаем начальные значения min/max
      minPrice = Infinity;
      maxPrice = -Infinity;
 
@@ -183,8 +177,7 @@ async function applyFilters() {
     }
 
     filteredProducts.forEach(product => {
-            // Определяем min/max цены
-         const price = product.discount_price || product.actual_price;
+          const price = product.discount_price || product.actual_price;
                 if (price < minPrice) {
                     minPrice = price;
                 }
@@ -197,14 +190,13 @@ async function applyFilters() {
     document.getElementById('load-more').style.display = 'none';
 }
 
-// Функция сброса фильтров
+
 function handleResetFilters() {
     currentFilters = {};
     localStorage.removeItem('filters');
 
     const form = document.getElementById('filters-form');
-    form.reset(); // Сбрасываем значения полей формы
-
+    form.reset();
     const productsContainer = document.getElementById('products');
     productsContainer.innerHTML = '';
     currentPage = 1;
@@ -214,7 +206,6 @@ function handleResetFilters() {
 }
 
 
-// Функция загрузки всех категорий
 async function loadCategories() {
     try {
         const data = await api.getProducts(1);
@@ -254,18 +245,16 @@ async function loadCategories() {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Загружаем категории
     loadCategories();
-    // Загружаем товары
     loadProducts();
+    updateCartCount();
 
-    // Добавляем обработчики событий
+
     document.getElementById('load-more').addEventListener('click', handleLoadMore);
     document.getElementById('sort').addEventListener('change', handleSortChange);
     document.getElementById('filters-form').addEventListener('submit', handleFilterSubmit);
     document.getElementById('reset-filters').addEventListener('click', handleResetFilters);
 
-    // Восстанавливаем фильтры из localStorage
     const savedFilters = JSON.parse(localStorage.getItem('filters') || '{}');
 
      if (savedFilters.categories && typeof savedFilters.categories === 'string') {
@@ -284,31 +273,51 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelector('input[name="discount"]').checked = true;
     }
     currentFilters = savedFilters;
+     // Добавляем обработчик для кнопки поиска
+    const searchButton = document.querySelector('.search__button');
+    searchButton.addEventListener('click', function() {
+        const query = document.querySelector('.search__input').value;
+       searchProducts(query);
+    });
+
 });
 
 
 
-// Функция поиска товаров
+const notifications = {
+    container: document.getElementById('notifications'),
+    show: function(message, type) {
+        const notification = document.createElement('div');
+        notification.classList.add('notification', `notification--${type}`);
+        notification.textContent = message;
+
+        this.container.appendChild(notification);
+
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+};
+
+
 async function searchProducts(query) {
-    if (!query.trim()) return;
+  if (!query.trim()) {
+        document.querySelector('.autocomplete-list').innerHTML = '';
+        loadProducts()
+        return;
+    }
 
-    try {
-        const params = new URLSearchParams({
-            query: query,
-            api_key: CONFIG.API_KEY
-        });
-
-        const response = await fetch(`${CONFIG.API_URL}/goods/search?${params}`);
-        const data = await response.json();
-
+  try {
         const productsContainer = document.getElementById('products');
         productsContainer.innerHTML = '';
-         allProducts = []
+        allProducts = [];
+        const sortSelect = document.getElementById('sort');
+        const data = await api.getProducts(1, sortSelect.value, { query: query });
+
         if (data.goods && data.goods.length > 0) {
             data.goods.forEach(product => {
-                productsContainer.appendChild(createProductCard(product));
-                // Определяем min/max цены
-                const price = product.discount_price || product.actual_price;
+               productsContainer.appendChild(createProductCard(product));
+                 const price = product.discount_price || product.actual_price;
                 if (price < minPrice) {
                     minPrice = price;
                 }
@@ -317,34 +326,74 @@ async function searchProducts(query) {
                 }
             });
         } else {
-            productsContainer.innerHTML = '<p class="no-results">Товары не найдены</p>';
+           productsContainer.innerHTML = '<p class="no-results">Товары не найдены</p>';
         }
 
-        // Скрываем кнопку "Загрузить еще" при поиске
         document.getElementById('load-more').style.display = 'none';
-
-    } catch (error) {
+  } catch (error) {
         notifications.show('Ошибка при поиске товаров', 'error');
     }
 }
 
-// Добавляем обработчик поиска с debounce
+
+async function autocomplete(query) {
+  if (!query.trim()) {
+      const autocompleteList = document.querySelector('.autocomplete-list');
+         autocompleteList.innerHTML = '';
+          autocompleteList.classList.remove('active');
+      return;
+  }
+    try {
+        const data = await api.autocomplete(query);
+        const autocompleteList = document.querySelector('.autocomplete-list');
+        autocompleteList.innerHTML = '';
+
+         if (data && data.length > 0) {
+            data.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.textContent = item;
+                itemElement.classList.add('autocomplete-item');
+                  itemElement.addEventListener('click', () => {
+                        document.querySelector('.search__input').value = item;
+                       autocompleteList.innerHTML = '';
+                        autocompleteList.classList.remove('active');
+                       searchProducts(item);
+                    });
+                 autocompleteList.appendChild(itemElement);
+
+            });
+           autocompleteList.classList.add('active');
+             }
+            else {
+               autocompleteList.innerHTML = '';
+                 autocompleteList.classList.remove('active');
+           }
+
+    } catch (error) {
+        console.error('Autocomplete Error:', error);
+        document.querySelector('.autocomplete-list').innerHTML = '';
+         autocompleteList.classList.remove('active');
+    }
+}
+
 let searchTimeout;
 const searchInput = document.querySelector('.search__input');
 searchInput.addEventListener('input', function() {
     clearTimeout(searchTimeout);
+      const query = this.value;
+    autocomplete(query);
     searchTimeout = setTimeout(() => {
-        searchProducts(this.value);
+      searchProducts(query);
     }, 500);
 });
 
-// Обработка мобильной версии
+
+
 function handleMobileMenu() {
     const sidebar = document.querySelector('.sidebar');
     const filters = document.querySelector('.filters');
 
     if (window.innerWidth <= 768) {
-        // Создаем кнопку для показа/скрытия фильтров
         if (!document.querySelector('.filters-toggle')) {
             const toggleButton = document.createElement('button');
             toggleButton.className = 'button button--secondary filters-toggle';
@@ -356,8 +405,11 @@ function handleMobileMenu() {
     }
 }
 
-// Обработчик изменения размера окна
 window.addEventListener('resize', handleMobileMenu);
-
-// Вызываем обработчик при загрузке страницы
 handleMobileMenu();
+
+function updateCartCount() {
+    const cartCountElement = document.getElementById('cart-count');
+     const fullOrder = LocalStorageService.getFullOrder() || [];
+   cartCountElement.textContent = fullOrder.length;
+}

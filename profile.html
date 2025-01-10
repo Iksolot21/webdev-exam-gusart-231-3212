@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>История заказов</title>
-
   <link rel="stylesheet" href="assets/style.css">
   <link rel="stylesheet" href="assets/profile.css">
 </head>
@@ -26,24 +25,27 @@
         </div>
     </header>
 
-  <main class="container mx-auto my-8">
-    <h1 class="text-2xl font-bold">История заказов</h1>
-    <table class="orders-table w-full bg-white shadow-md rounded-lg overflow-hidden">
-      <thead class="bg-gray-200">
-        <tr>
-          <th class="px-4 py-3 text-left">№</th>
-          <th class="px-4 py-3 text-left">Дата оформления</th>
-          <th class="px-4 py-3 text-left">Состав заказа</th>
-          <th class="px-4 py-3 text-right">Стоимость</th>
-          <th class="px-4 py-3 text-center">Доставка</th>
-          <th class="px-4 py-3 text-center">Действия</th>
-        </tr>
-      </thead>
-      <tbody id="ordersTableBody">
-        <!-- Данные о заказах будут добавляться сюда с помощью JavaScript -->
-      </tbody>
-    </table>
-  </main>
+    <main class="container">
+        <h1 class="main-title">История заказов</h1>
+        <div class="table-container">
+        <table class="orders-table">
+          <thead>
+            <tr>
+              <th>№</th>
+              <th>Дата оформления</th>
+              <th>Состав заказа</th>
+              <th>Стоимость</th>
+              <th>Доставка</th>
+              <th>Действия</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTableBody">
+            <!-- Данные о заказах будут добавляться сюда с помощью JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+
 
   <div id="viewOrderModal" class="modal">
     <div class="modal-content">
@@ -85,9 +87,7 @@
     </div>
   </div>
  <!-- Подвал -->
-<script src="assets/config.js"></script>
 <script src="assets/utils.js"></script>
-<script src="assets/api.js"></script>
 <script type="module" src="assets/profile.js"></script>
 <footer class="footer">
     <div class="container footer__container">

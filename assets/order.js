@@ -22,7 +22,7 @@ function generateTimeIntervals() {
     const currentHour = isToday ? now.getHours() : 0;
     const deliveryTimeSelect = document.getElementById('delivery_time');
   
-   deliveryTimeSelect.innerHTML = '<option value="">Как можно скорее</option>';
+   deliveryTimeSelect.innerHTML = '<option value="">Выберите время</option>';
 
 
    const validIntervals = ["08:00-12:00", "12:00-14:00", "14:00-18:00", "18:00-22:00"];
@@ -210,11 +210,13 @@ function handleOrderSubmit(event) {
             alert('Ваш заказ успешно оформлен! Спасибо!');
             console.log('Комментарий:', commentValue);
             // Получаем текущие товары в корзине
+             window.location.reload();
             const currentOrder = LocalStorageService.getFullOrder() || [];
             // Удаляем только заказанные товары
             const remainingItems = currentOrder.filter(item => !goodIds.includes(item.id));
             // Сохраняем оставшиеся товары
             LocalStorageService.saveFullOrder(remainingItems);
+
          })
         .catch(error => {
             console.error('Ошибка при отправке заказа:', error);
