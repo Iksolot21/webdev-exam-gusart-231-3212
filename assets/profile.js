@@ -113,7 +113,7 @@ function updateOrdersTable() {
         <td>${order.id}</td>
         <td>${orderDate}</td>
         <td>${goodsNames.join(', ') || 'Товары не найдены'}</td>
-        <td class="text-right">${totalPrice}₽</td>
+        <td class="text-right">${totalPrice}$</td>
         <td class="text-center">${deliveryDateTime}</td>
         <td class="btn-container"></td>
     `;
@@ -253,11 +253,11 @@ function viewOrderDetails(orderId) {
 
     orderGoods.forEach(good => {
         const listItem = document.createElement('li');
-        listItem.innerHTML = `${good.name} (${good.discount_price || good.actual_price}₽)`;
+        listItem.innerHTML = `${good.name} (${good.discount_price || good.actual_price}$)`;
         orderItemsList.appendChild(listItem);
     });
 
-    document.getElementById('totalPriceView').textContent = `${totalPrice}₽`;
+    document.getElementById('totalPriceView').textContent = `${totalPrice}$`;
     openModal('viewOrderModal');
 }
 function editOrder(orderId) {
@@ -345,10 +345,10 @@ function editOrder(orderId) {
 
     orderGoods.forEach(good => {
         const listItem = document.createElement('li');
-        listItem.innerHTML = `${good.name} (${good.discount_price || good.actual_price}₽)`;
+        listItem.innerHTML = `${good.name} (${good.discount_price || good.actual_price}$)`;
         orderItemsList.appendChild(listItem);
     });
-    document.getElementById('totalPrice2').textContent = `Итоговая стоимость: ${totalPrice}₽`;
+    document.getElementById('totalPrice2').textContent = `Итоговая стоимость: ${totalPrice}$`;
     openModal('orderEditModal');
 }
 
