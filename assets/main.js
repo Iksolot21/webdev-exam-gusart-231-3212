@@ -16,28 +16,40 @@ function createProductCard(product) {
     const card = document.createElement('div');
     card.className = 'product-card';
 
+    let priceContent;
+    let discountPercentage = '';
+
+    if (product.discount_price) {
+        const discount = ((product.actual_price - product.discount_price) / product.actual_price) * 100;
+        discountPercentage = `
+            <span class="product-card__discount-percentage">-${Math.round(discount)}%</span>
+        `;
+       priceContent = `
+        <span class="product-card__price--old">$${product.actual_price}</span>
+        <span class="product-card__price--new">$${product.discount_price}</span>
+          ${discountPercentage}
+    `;
+    } else {
+           priceContent = `
+          <span class="product-card__price--new">$${product.actual_price}</span>
+    `;
+    }
+
     card.innerHTML = `
         <img src="${product.image_url}" alt="${product.name}" class="product-card__image">
         <h3 class="product-card__title">${product.name}</h3>
         <div class="product-card__rating">★ ${product.rating}</div>
         <div class="product-card__price">
-            ${product.discount_price ? `
-                <span class="product-card__price--old">$${product.actual_price}</span>
-                <span class="product-card__price--new">$${product.discount_price}</span>
-            ` : `
-                <span class="product-card__price--new">$${product.actual_price}</span>
-            `}
+           ${priceContent}
         </div>
         <button class="button button--primary">
             Добавить в корзину
         </button>
     `;
-
     const addToCartButton = card.querySelector('.button--primary');
     addToCartButton.addEventListener('click', () => {
         handleAddToCart(product);
     });
-
     return card;
 }
 

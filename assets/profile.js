@@ -1,7 +1,20 @@
 import { CONFIG } from './config.js';
+import LocalStorageService from './localStorage.js';
 
 let goods = [];
 let orders = [];
+
+function updateCartCount() {
+    const cartCountElement = document.getElementById('cart-count');
+     const fullOrder = LocalStorageService.getFullOrder() || [];
+   cartCountElement.textContent = fullOrder.length;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    init();
+    initializeEventListeners();
+     updateCartCount(); 
+});
 
 function init() {
     fetch(`${CONFIG.API_URL}/goods?api_key=${CONFIG.API_KEY}`)
